@@ -58,6 +58,7 @@ class ControllerBase
 
   # method exposing a `Session` object
   def session
+    @session ||= Session.new(@req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
@@ -71,6 +72,7 @@ class ControllerBase
   def prepare_render_or_redirect
     raise "double render error" if already_built_response?
     @already_built_response = true
+    session.store_session(@res)
   end
 
 
